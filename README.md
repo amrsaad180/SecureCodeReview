@@ -5,56 +5,31 @@
 **Date:** 2025-07-02  
 
 ## 1. Introduction  
-This report reviews a Python script that stores user input in a text file, focusing on identifying security vulnerabilities and improving the code security.
+This report reviews a Python script that stores user input in a text file, focusing on security improvements.
 
 ## 2. Code Description  
-The script prompts the user to enter text, then appends this text to a file named `user_data.txt`.
+The script prompts the user to enter text, validates the input, and appends it to a file named `user_data.txt`.
 
 ## 3. Discovered Vulnerabilities
 
-| Security Issue               | Description                                      |
-|-----------------------------|------------------------------------------------|
-| Lack of Input Validation     | The code allows any input without validation, which could cause issues. |
-| No Error Handling            | There is no error handling when opening or writing to the file. |
-| Unprotected Data Storage     | Data is stored as plain text without encryption. |
+| Security Issue               | Description                                   |
+|-----------------------------|-----------------------------------------------|
+| Lack of Input Validation     | The code previously allowed any input without validation, which may lead to injection attacks. |
+| No Error Handling            | There was no error handling during file operations, risking data loss or crashes. |
+| Unprotected Data Storage     | Data was stored in plain text without encryption. |
 
-## 4. Recommendations and Solutions  
+## 4. Improvements Made
 
-- **Input Validation:**  
-  Limit input length and restrict dangerous characters.
+- Added input length validation (max 100 characters).  
+- Blocked dangerous characters like `;`, `&`, `|`, and `$`.  
+- Implemented try-except for file writing errors.  
 
-- **Exception Handling:**  
-  Use try-except blocks to handle file read/write errors.
+## 5. Recommendations
 
-- **Data Encryption (if needed):**  
-  Encrypt sensitive data before storing.
+- Encrypt sensitive data before storage.  
+- Use secure storage mechanisms in production environments.
 
-- **Secure Storage:**  
-  Use databases with access controls.
+## 6. Conclusion
 
-- **Logging:**  
-  Implement logging to monitor actions and errors.
+The code was reviewed and improved by adding input validation and error handling. Further recommendations were provided to secure the data as needed.
 
-## 5. Proposed Code Changes
-
-```python
-def save_user_input():
-    user_input = input("Enter some text (max 100 chars): ")
-
-    if len(user_input) > 100:
-        print("Input too long!")
-        return
-
-    if any(c in user_input for c in [';', '&', '|', '$']):
-        print("Invalid characters in input!")
-        return
-
-    try:
-        with open("user_data.txt", "a") as f:
-            f.write(user_input + "\n")
-        print("Data saved!")
-    except Exception as e:
-        print(f"Error saving data: {e}")
-
-if __name__ == "__main__":
-    save_user_input()
