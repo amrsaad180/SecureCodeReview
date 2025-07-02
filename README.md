@@ -33,3 +33,8 @@ The script prompts the user to enter text, validates the input, and appends it t
 
 The code was reviewed and improved by adding input validation and error handling. Further recommendations were provided to secure the data as needed.
 
+# Task 3 - Secure Coding Review
+
+This repository contains the solution for Task 3 in the CodeAlpha Cybersecurity internship.
+
+The task involves reviewing a Python script for security issues, improving it with input validation and error handling, and documenting the findings.
